@@ -8,6 +8,7 @@ public class TankShooting : MonoBehaviour
     public Rigidbody m_Shell;            
     public Transform m_FireTransform;    
     public Slider m_AimSlider;           
+    public Slider m_AmmoSlider;
     public AudioSource m_ShootingAudio;  
     public AudioClip m_ChargingClip;     
     public AudioClip m_FireClip;         
@@ -30,16 +31,15 @@ public class TankShooting : MonoBehaviour
     {
         m_CurrentLaunchForce = m_MinLaunchForce;
         m_AimSlider.value = m_MinLaunchForce;
+        ammo = maxAmmoCount;
+        SetAmmoUI(); //Update the UI to match the current ammo
     }
 
 
     private void Start()
     {
         m_FireButton = "Fire" + m_PlayerNumber;
-
-        m_ChargeSpeed = (m_MaxLaunchForce - m_MinLaunchForce) / m_MaxChargeTime;
-
-        ammo = maxAmmoCount;
+        m_AmmoSlider.maxValue = maxAmmoCount;
     }
 
     private void Update()
@@ -67,11 +67,14 @@ public class TankShooting : MonoBehaviour
     {
         m_Fired = true;
         ammo--;
+        int ammoCountOnFire = ammo;
+        SetAmmoUI();
         
         // Instantiate and launch the shell.
         Rigidbody shellInstance = Instantiate(m_Shell, m_FireTransform.position, m_FireTransform.rotation) as Rigidbody;
         shellInstance.velocity = m_CurrentLaunchForce * m_FireTransform.forward;
-
+        shellInstance.gameObject.GetComponent<ShellExplosion>().SetTank(this.gameObject);
+        
         m_ShootingAudio.clip = m_FireClip;
         m_ShootingAudio.Play();
 
@@ -80,6 +83,15 @@ public class TankShooting : MonoBehaviour
         yield return new WaitForSeconds(fireCooldownTime);
         
         //todo: check to see if another bullet has been fired by this time
-        ammo = maxAmmoCount;
+        if (ammoCountOnFire == ammo) //if the ammo is the same as when we fired then no new shell has been fired
+        {
+            ammo = maxAmmoCount; //thus refill the ammo
+            SetAmmoUI();
+        }
+    }
+
+    private void SetAmmoUI()
+    {
+        m_AmmoSlider.value = ammo;
     }
 }
