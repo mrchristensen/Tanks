@@ -9,6 +9,7 @@ public class TankMovement : MonoBehaviour
 {
     public int m_PlayerNumber = 1;
     public Transform m_FireTransform;
+    public Transform m_BodyTransform;
     public float m_Speed = 12f;
     public float m_TurnSpeed = 180f;
     public AudioSource m_MovementAudio;
@@ -71,7 +72,6 @@ public class TankMovement : MonoBehaviour
         
         m_MoveVector = new Vector3(Input.GetAxisRaw(m_TurnAxisName), 0, Input.GetAxisRaw(m_MovementAxisName));
         Vector3 tempVector = new Vector3(Input.GetAxisRaw(m_LookAxisHorizontalName), 0, Input.GetAxisRaw(m_LookAxisVerticalName));
-        Debug.Log("look magnitude: " + tempVector.magnitude);
         if (tempVector.magnitude > .6)
         {
             m_LookVector = tempVector;
@@ -141,7 +141,7 @@ public class TankMovement : MonoBehaviour
         
      
         // Smoothly rotate towards the target point.
-        transform.rotation = Quaternion.Slerp(m_Rigidbody.rotation, m_RotateAngle, 8f * Time.deltaTime);
+        m_BodyTransform.rotation = Quaternion.Slerp(m_BodyTransform.rotation, m_RotateAngle, 8f * Time.deltaTime);
 
         // transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, speed * Time.deltaTime);
     }
