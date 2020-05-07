@@ -40,7 +40,7 @@ public class ShellExplosion : MonoBehaviour
     }
 
 
-
+    //Bounce or explode
     void OnCollisionEnter (Collision collision) {
         Debug.Log("Hit something");
         
@@ -60,10 +60,11 @@ public class ShellExplosion : MonoBehaviour
 
             // assign the reflected velocity back to the rigidbody
             GetComponent<Rigidbody>().velocity = reflectedVelocity;
-            oldVelocity = reflectedVelocity;
             // rotate the object by the same ammount we changed its velocity
             Quaternion rotation = Quaternion.FromToRotation(oldVelocity, reflectedVelocity);
             transform.rotation = rotation * transform.rotation;
+            
+            oldVelocity = reflectedVelocity; //Update the velocity for the next bounce calculation
         }
         else //if no more bounces or hit a player
         {
