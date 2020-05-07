@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,7 @@ public class TankShooting : MonoBehaviour
     public Transform m_FireTransform;    
     public Slider m_AimSlider;           
     public Slider m_AmmoSlider;
+    public LineRenderer m_AimingLine;
     public AudioSource m_ShootingAudio;  
     public AudioClip m_ChargingClip;     
     public AudioClip m_FireClip;         
@@ -60,6 +62,29 @@ public class TankShooting : MonoBehaviour
         {
             m_Fired = false;
         }
+
+        DrawRay();
+        
+
+    }
+
+    private void DrawRay()
+    {
+        Ray ray = new Ray( m_FireTransform.position, m_FireTransform.forward );
+        RaycastHit raycastHit;
+        Vector3 endPosition = m_FireTransform.position + ( 120f * m_FireTransform.forward );
+ 
+        if( Physics.Raycast( ray, out raycastHit, 12f ) ) {
+            endPosition = raycastHit.point;
+        }
+ 
+        m_AimingLine.SetPosition( 0, m_FireTransform.position );
+        m_AimingLine.SetPosition( 1, endPosition );
+    }
+
+    private void FixedUpdate()
+    {
+
     }
 
 
