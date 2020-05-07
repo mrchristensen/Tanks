@@ -17,13 +17,15 @@ public class TankShooting : MonoBehaviour
     public float m_MinLaunchForce = 15f; 
     public float m_MaxLaunchForce = 30f; 
     public float m_MaxChargeTime = 0.75f;
-    
+
+    private TankMovement m_TankMovement;
     private string m_FireButton;         
     private float m_CurrentLaunchForce;  
     private float m_ChargeSpeed;         
     private bool m_Fired;
     private int ammo;
     private int maxAmmoCount = 4;
+    private float speedCooldownTime = .2f;
     private float fireCooldownTime = 3f;
     
     // private IEnumerator fireCoroutine;
@@ -40,6 +42,7 @@ public class TankShooting : MonoBehaviour
 
     private void Start()
     {
+        m_TankMovement = GetComponent<TankMovement>();
         m_FireButton = "Fire" + m_PlayerNumber;
         m_AmmoSlider.maxValue = maxAmmoCount;
     }
@@ -104,10 +107,16 @@ public class TankShooting : MonoBehaviour
         m_ShootingAudio.Play();
 
         m_CurrentLaunchForce = m_MinLaunchForce;
-        //todo: slow down the tank
-        yield return new WaitForSeconds(fireCooldownTime);
         
-        //todo: check to see if another bullet has been fired by this time
+        m_TankMovement.SetSpeedSlow();
+        yield return new WaitForSeconds(speedCooldownTime);
+        if (ammoCountOnFire == ammo) //if the ammo is the same as when we fired then no new shell has been fired
+        {
+            m_TankMovement.SetSpeedNormal(); //thus set the tank to normal speed
+        }
+        
+        yield return new WaitForSeconds(fireCooldownTime - speedCooldownTime);
+        
         if (ammoCountOnFire == ammo) //if the ammo is the same as when we fired then no new shell has been fired
         {
             ammo = maxAmmoCount; //thus refill the ammo

@@ -10,13 +10,15 @@ public class TankMovement : MonoBehaviour
     public int m_PlayerNumber = 1;
     public Transform m_FireTransform;
     public Transform m_BodyTransform;
-    public float m_Speed = 12f;
+    public float m_SpeedNormal = 12f;
+    private float m_SpeedSlow = 2f;
     public float m_TurnSpeed = 180f;
     public AudioSource m_MovementAudio;
     public AudioClip m_EngineIdling;
     public AudioClip m_EngineDriving;
     public float m_PitchRange = 0.2f;
 
+    private float m_SpeedCurrent;
     private string m_MovementAxisName;
     private string m_LookAxisHorizontalName;
     private string m_LookAxisVerticalName;
@@ -39,6 +41,7 @@ public class TankMovement : MonoBehaviour
 
     private void OnEnable ()
     {
+        m_SpeedCurrent = m_SpeedNormal;
         m_Rigidbody.isKinematic = false;
         m_MovementInputValue = 0f;
         m_TurnInputValue = 0f;
@@ -122,7 +125,8 @@ public class TankMovement : MonoBehaviour
     {
         // Adjust the position of the tank based on the player's input.
         // Vector3 movement = m_MoveVector * m_MovementInputValue * m_Speed * Time.deltaTime;
-        Vector3 movement = m_MoveVector * m_Speed * Time.deltaTime;
+        Debug.Log("MovementSpeedCurrent: " + m_SpeedCurrent);
+        Vector3 movement = m_MoveVector * (m_SpeedCurrent * Time.deltaTime);
         m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
         Debug.DrawRay(m_FireTransform.position, m_MoveVector, Color.green);
     }
@@ -156,7 +160,7 @@ public class TankMovement : MonoBehaviour
 
         // Vector3 MouseWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, 0, Input.mousePosition.z));
         var rotation = Quaternion.LookRotation(m_LookVector);
-        m_FireTransform.rotation = Quaternion.Slerp(m_FireTransform.rotation, rotation, m_Speed * Time.deltaTime);
+        m_FireTransform.rotation = Quaternion.Slerp(m_FireTransform.rotation, rotation, m_SpeedNormal * Time.deltaTime);
         // m_FireTransform.rotation = Quaternion.Euler(new Vector3(0, m_FireTransform.rotation.eulerAngles.y, 0));
         
         
@@ -241,5 +245,17 @@ public class TankMovement : MonoBehaviour
         // point.Set(point.x, point.y, point.z);
         //
         // m_FireTransform.LookAt(point);
+    }
+
+    public void SetSpeedSlow()
+    {
+        Debug.Log(m_SpeedSlow);
+        m_SpeedCurrent = m_SpeedSlow;
+    }
+
+    public void SetSpeedNormal()
+    {
+        m_SpeedCurrent = m_SpeedNormal;
+        // m_SpeedCurrent = Mathf.Lerp(m_SpeedSlow, m_SpeedNormal, Time.deltaTime * 100f);
     }
 }
