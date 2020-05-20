@@ -46,7 +46,7 @@ public class ShellExplosion : MonoBehaviour
         
         if (collision.gameObject == m_Tank)
         {
-            Debug.Log("Hit the tank that shot the shell");
+            Debug.Log("Hit the tank that shot the shell (friendly fire)");
             return;
         }
         else if(m_BouncesRemaining > 0 && collision.gameObject.layer != PLAYER_LAYER) //hit something that's not a player and there are more bounces
@@ -68,18 +68,33 @@ public class ShellExplosion : MonoBehaviour
         }
         else //if no more bounces or hit a player
         {
-            Explode();
+            Explode(collision.gameObject);
         }
     }
 
-    private void Explode()
+    private void Explode(GameObject shotTank)
     {
+        if (shotTank != null)
+        {
+            TankHealth targetHealth = shotTank.GetComponent<TankHealth>();
+            if (targetHealth != null)
+            {
+                targetHealth.TakeDamage(50f); //todo make this not a magic number
+            }
+        }
+        
         // Find all the tanks in an area around the shell and damage them.
         Collider[] colliders = Physics.OverlapSphere(transform.position, m_ExplosionRadius, m_TankMask);
+        
         
         for (int i = 0; i < colliders.Length; i++)
         {
             Rigidbody targetRigidbody = colliders[i].GetComponent<Rigidbody>();
+
+            foreach (var VARIABLE in colliders)
+            {
+                Debug.Log(VARIABLE.name);
+            }
         
             if (!targetRigidbody)
             {
@@ -95,9 +110,9 @@ public class ShellExplosion : MonoBehaviour
                 continue;
             }
         
-            float damage = CalculateDamage(targetRigidbody.position);
+            // float damage = CalculateDamage(targetRigidbody.position);
                     
-            targetHealth.TakeDamage(damage);
+            // targetHealth.TakeDamage(damage);
         }
         
         m_ExplosionParticles.transform.parent = null; //Deattach the child object (so we can remove the shell object while still having the particles and sounds)
