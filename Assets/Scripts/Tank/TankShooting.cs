@@ -63,28 +63,26 @@ public class TankShooting : MonoBehaviour
             m_Fired = false;
         }
 
-        DrawRay();
-        
-
     }
 
     private void DrawRay()
     {
         Ray ray = new Ray( m_FireTransform.position, m_FireTransform.forward );
         RaycastHit raycastHit;
-        Vector3 endPosition = m_FireTransform.position + ( 120f * m_FireTransform.forward );
+        // Vector3 endPosition = m_FireTransform.position + ( 120f * m_FireTransform.forward );
  
-        if( Physics.Raycast( ray, out raycastHit, 12f ) ) {
-            endPosition = raycastHit.point;
+        if( Physics.Raycast( ray, out raycastHit, 256f ) ) {
+            Vector3 endPosition = raycastHit.point;
+            m_AimingLine.SetPosition( 0, m_FireTransform.position );
+            m_AimingLine.SetPosition( 1, endPosition );
+            
         }
  
-        m_AimingLine.SetPosition( 0, m_FireTransform.position );
-        m_AimingLine.SetPosition( 1, endPosition );
     }
 
     private void FixedUpdate()
     {
-
+        DrawRay();
     }
 
 
