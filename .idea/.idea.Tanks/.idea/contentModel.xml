@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\Matt Christensen\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Matt Christensen\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_Tanks.895644138.00" t="ExcludeRecursive" />
+    <e p="C:\Users\Matt Christensen\Downloads\UnityMarkdownViewer-1.0.7\UnityMarkdownViewer-1.0.7\Editor" t="Include">
+      <e p="Mischief.MDV.Editor.asmdef" t="Include" />
+      <e p="Scripts" t="Include">
+        <e p="Layout" t="Include">
+          <e p="Block.cs" t="Include" />
+          <e p="BlockContainer.cs" t="Include" />
+          <e p="BlockContent.cs" t="Include" />
+          <e p="BlockLine.cs" t="Include" />
+          <e p="BlockSpace.cs" t="Include" />
+          <e p="Content.cs" t="Include" />
+          <e p="ContentImage.cs" t="Include" />
+          <e p="ContentText.cs" t="Include" />
+          <e p="Context.cs" t="Include" />
+          <e p="IActions.cs" t="Include" />
+          <e p="IBuilder.cs" t="Include" />
+          <e p="Layout.cs" t="Include" />
+          <e p="LayoutBuilder.cs" t="Include" />
+          <e p="Style.cs" t="Include" />
+          <e p="StyleConverter.cs" t="Include" />
+        </e>
+        <e p="MarkdownAsset.cs" t="Include" />
+        <e p="MarkdownEditor.cs" t="Include" />
+        <e p="MarkdownEditorAsset.cs" t="Include" />
+        <e p="MarkdownHandleImages.cs" t="Include" />
+        <e p="MarkdownHandleNavigate.cs" t="Include" />
+        <e p="MarkdownHistory.cs" t="Include" />
+        <e p="MarkdownImporter.cs" t="Include" />
+        <e p="MarkdownMenus.cs" t="Include" />
+        <e p="MarkdownPreferences.cs" t="Include" />
+        <e p="MarkdownUtils.cs" t="Include" />
+        <e p="MarkdownViewer.cs" t="Include" />
+        <e p="mgGif.cs" t="Include" />
+        <e p="Renderer" t="Include">
+          <e p="RendererBlockCode.cs" t="Include" />
+          <e p="RendererBlockHeading.cs" t="Include" />
+          <e p="RendererBlockHtml.cs" t="Include" />
+          <e p="RendererBlockList.cs" t="Include" />
+          <e p="RendererBlockParagraph.cs" t="Include" />
+          <e p="RendererBlockQuote.cs" t="Include" />
+          <e p="RendererBlockThematicBreak.cs" t="Include" />
+          <e p="RendererInlineAutoLink.cs" t="Include" />
+          <e p="RendererInlineCode.cs" t="Include" />
+          <e p="RendererInlineDelimiter.cs" t="Include" />
+          <e p="RendererInlineEmphasis.cs" t="Include" />
+          <e p="RendererInlineHtml.cs" t="Include" />
+          <e p="RendererInlineHtmlEntity.cs" t="Include" />
+          <e p="RendererInlineLineBreak.cs" t="Include" />
+          <e p="RendererInlineLink.cs" t="Include" />
+          <e p="RendererInlineLiteral.cs" t="Include" />
+          <e p="RendererMarkdown.cs" t="Include" />
+          <e p="RendererTable.cs" t="Include" />
+        </e>
+      </e>
+    </e>
+    <e p="C:\Users\Matt Christensen\OneDrive\Unity\Tanks" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="_Completed-Assets" t="Include">
+          <e p="Scripts" t="Include">
+            <e p="Camera" t="Include">
+              <e p="CameraControl.cs" t="Include" />
+            </e>
+            <e p="Managers" t="Include">
+              <e p="GameManager.cs" t="Include" />
+              <e p="TankManager.cs" t="Include" />
+            </e>
+            <e p="Shell" t="Include">
+              <e p="ShellExplosion.cs" t="Include" />
+            </e>
+            <e p="Tank" t="Include">
+              <e p="TankHealth.cs" t="Include" />
+              <e p="TankMovement.cs" t="Include" />
+              <e p="TankShooting.cs" t="Include" />
+            </e>
+            <e p="UI" t="Include">
+              <e p="UIDirectionControl.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Editor" t="Include">
+          <e p="MoveSceneViewCamera.cs" t="Include" />
+        </e>
+        <e p="Fonts" t="Include">
+          <e p="Bowlby_One" t="Include">
+            <e p="FontLicense.txt" t="Include" />
+          </e>
+        </e>
+        <e p="MainMenu.uxml" t="Include" />
+        <e p="Plugins" t="Include">
+          <e p="GitHub" t="Include">
+            <e p="Editor" t="Include">
+              <e p="credits.txt" t="Include" />
+              <e p="eula.txt" t="Include" />
+              <e p="ExtensionLoader.cs" t="Include" />
+              <e p="UnityAPIWrapper.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Scripts" t="Include">
+          <e p="Camera" t="Include">
+            <e p="CameraControl.cs" t="Include" />
+          </e>
+          <e p="ColorPicker.cs" t="Include" />
+          <e p="Managers" t="Include">
+            <e p="GameManager.cs" t="Include" />
+            <e p="LevelManager.cs" t="Include" />
+            <e p="TankManager.cs" t="Include" />
+          </e>
+          <e p="Shell" t="Include">
+            <e p="ShellExplosion.cs" t="Include" />
+          </e>
+          <e p="Tank" t="Include">
+            <e p="TankHealth.cs" t="Include" />
+            <e p="TankMovement.cs" t="Include" />
+            <e p="TankShooting.cs" t="Include" />
+          </e>
+          <e p="UI" t="Include">
+            <e p="MainMenuManager.cs" t="Include" />
+            <e p="UIDirectionControl.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Stlye.uss" t="Include" />
+        <e p="Tanks!_Third-PartyNotice.txt" t="Include" />
+        <e p="test.uss" t="Include" />
+        <e p="TextMesh Pro" t="Include">
+          <e p="Fonts" t="Include">
+            <e p="LiberationSans - OFL.txt" t="Include" />
+          </e>
+          <e p="Resources" t="Include">
+            <e p="LineBreaking Following Characters.txt" t="Include" />
+            <e p="LineBreaking Leading Characters.txt" t="Include" />
+            <e p="Shaders" t="Include">
+              <e p="TMP_Bitmap-Custom-Atlas.shader" t="Include" />
+              <e p="TMP_Bitmap-Mobile.shader" t="Include" />
+              <e p="TMP_Bitmap.shader" t="Include" />
+              <e p="TMP_SDF Overlay.shader" t="Include" />
+              <e p="TMP_SDF-Mobile Masking.shader" t="Include" />
+              <e p="TMP_SDF-Mobile Overlay.shader" t="Include" />
+              <e p="TMP_SDF-Mobile.shader" t="Include" />
+              <e p="TMP_SDF-Surface-Mobile.shader" t="Include" />
+              <e p="TMP_SDF-Surface.shader" t="Include" />
+              <e p="TMP_SDF.shader" t="Include" />
+              <e p="TMP_Sprite.shader" t="Include" />
+              <e p="TMPro.cginc" t="Include" />
+              <e p="TMPro_Properties.cginc" t="Include" />
+              <e p="TMPro_Surface.cginc" t="Include" />
+            </e>
+          </e>
+          <e p="Sprites" t="Include">
+            <e p="EmojiOne Attribution.txt" t="Include" />
+          </e>
+        </e>
+        <e p="TutorialInfo" t="Include">
+          <e p="Scripts" t="Include">
+            <e p="Editor" t="Include">
+              <e p="ReadmeEditor.cs" t="Include" />
+            </e>
+            <e p="Readme.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="Mischief.MDV.Editor.csproj" t="IncludeRecursive" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="Packages" t="ExcludeRecursive" />
+      <e p="Tanks.sln" t="IncludeFlat" />
+      <e p="Temp\bin" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>

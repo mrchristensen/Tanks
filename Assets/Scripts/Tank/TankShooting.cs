@@ -14,13 +14,11 @@ public class TankShooting : MonoBehaviour
     public AudioSource m_ShootingAudio;  
     public AudioClip m_ChargingClip;     
     public AudioClip m_FireClip;         
-    public float m_MinLaunchForce = 15f; 
-    public float m_MaxLaunchForce = 30f; 
-    public float m_MaxChargeTime = 0.75f;
+    public float m_ShellLaunchForce = 15f;
 
     private TankMovement m_TankMovement;
     private string m_FireButton;         
-    private float m_CurrentLaunchForce;  
+    // private float m_CurrentLaunchForce;  
     private float m_ChargeSpeed;         
     private bool m_Fired;
     private int ammo;
@@ -33,8 +31,7 @@ public class TankShooting : MonoBehaviour
 
     private void OnEnable()
     {
-        m_CurrentLaunchForce = m_MinLaunchForce;
-        m_AimSlider.value = m_MinLaunchForce;
+        // m_AimSlider.value = m_MinLaunchForce;
         ammo = maxAmmoCount;
         SetAmmoUI(); //Update the UI to match the current ammo
     }
@@ -50,7 +47,7 @@ public class TankShooting : MonoBehaviour
     private void Update()
     {
         // Track the current state of the fire button and make decisions based on the current launch force.
-        m_AimSlider.value = m_MinLaunchForce;
+        // m_AimSlider.value = m_MinLaunchForce;
 
         // if (m_CurrentLaunchForce >= m_MaxLaunchForce && !m_Fired) //at max charge, not yet fired
         // {
@@ -100,13 +97,13 @@ public class TankShooting : MonoBehaviour
         
         // Instantiate and launch the shell.
         Rigidbody shellInstance = Instantiate(m_Shell, m_FireTransform.position, m_FireTransform.rotation) as Rigidbody;
-        shellInstance.velocity = m_CurrentLaunchForce * m_FireTransform.forward;
+        shellInstance.velocity = m_ShellLaunchForce * m_FireTransform.forward;
         shellInstance.gameObject.GetComponent<ShellExplosion>().SetTank(this.gameObject);
         
         m_ShootingAudio.clip = m_FireClip;
         m_ShootingAudio.Play();
 
-        m_CurrentLaunchForce = m_MinLaunchForce;
+        // m_CurrentLaunchForce = m_MinLaunchForce;
         
         m_TankMovement.SetSpeedSlow();
         yield return new WaitForSeconds(speedCooldownTime);
