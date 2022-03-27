@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3836098907108249966}
   - component: {fileID: 3836098907108249964}
   - component: {fileID: 3836098907108249963}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -301,9 +301,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3836098906659296836}
     m_Modifications:
+    - target: {fileID: 113952, guid: 89e78efe92dfe5a42837b392cdb0bf9e, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 195792, guid: 89e78efe92dfe5a42837b392cdb0bf9e, type: 3}
       propertyPath: m_Name
       value: ShellExplosion
+      objectReference: {fileID: 0}
+    - target: {fileID: 195792, guid: 89e78efe92dfe5a42837b392cdb0bf9e, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 199372, guid: 89e78efe92dfe5a42837b392cdb0bf9e, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 486730, guid: 89e78efe92dfe5a42837b392cdb0bf9e, type: 3}
       propertyPath: m_LocalPosition.x
