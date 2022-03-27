@@ -67,7 +67,7 @@ public class TankShooting : MonoBehaviour
 
     }
 
-    private void DrawRay()
+    public void DrawRay()
     {
         Ray ray = new Ray( m_FireTransform.position, m_FireTransform.forward );
         RaycastHit raycastHit;
