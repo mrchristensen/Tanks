@@ -62,6 +62,8 @@ public class TankShooting : MonoBehaviour
         {
             m_Fired = false;
         }
+        
+        DrawRay();
 
     }
 
@@ -82,7 +84,6 @@ public class TankShooting : MonoBehaviour
 
     private void FixedUpdate()
     {
-        DrawRay();
     }
 
 
