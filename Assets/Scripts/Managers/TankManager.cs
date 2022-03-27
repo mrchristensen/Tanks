@@ -30,9 +30,9 @@ public class TankManager
 
         MeshRenderer[] renderers = m_Instance.GetComponentsInChildren<MeshRenderer>();
 
-        for (int i = 0; i < renderers.Length; i++)
+        foreach (var meshRenderer in renderers)
         {
-            renderers[i].material.color = m_PlayerColor;
+            meshRenderer.material.color = m_PlayerColor;
         }
     }
 
@@ -59,7 +59,7 @@ public class TankManager
     {
         m_Instance.transform.position = m_SpawnPoint.position;
         m_Instance.transform.rotation = m_SpawnPoint.rotation;
-        m_Shooting.DrawRay(); //Draw prediction line at the begining or rounds (after resetting the position)
+        m_Shooting.DrawRay(); //Draw prediction line at the beginning or rounds (after resetting the position)
 
         m_Instance.SetActive(false);
         m_Instance.SetActive(true);

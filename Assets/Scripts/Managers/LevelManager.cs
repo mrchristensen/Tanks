@@ -218,9 +218,9 @@ public class LevelManager : MonoBehaviour
 
     private void DisableTankControl()
     {
-        for (int i = 0; i < m_Tanks.Length; i++)
+        foreach (var tank in m_Tanks)
         {
-            m_Tanks[i].DisableControl();
+            tank.DisableControl();
         }
     }
 }

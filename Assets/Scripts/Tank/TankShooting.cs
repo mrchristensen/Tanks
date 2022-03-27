@@ -33,7 +33,7 @@ public class TankShooting : MonoBehaviour
     {
         // m_AimSlider.value = m_MinLaunchForce;
         ammo = maxAmmoCount;
-        SetAmmoUI(); //Update the UI to match the current ammo
+        SetAmmoUI();  // Update the UI to match the current ammo
     }
 
 
