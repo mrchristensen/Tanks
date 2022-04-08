@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Tank;
 using UnityEngine;
 using UnityEngine.UI;
 

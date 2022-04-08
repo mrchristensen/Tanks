@@ -2,10 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.AccessControl;
+using Tank;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AIMovement : TankMovement
+public class TankMovementAI : TankMovement
 {
     [SerializeField] private List<GameObject> enemies = new List<GameObject>();
     [SerializeField] private GameObject me;
@@ -76,40 +77,33 @@ public class AIMovement : TankMovement
         }
         return false;
     }
-
-    public Camera cam;
-    // Start is called before the first frame update
-    void Start()
+    
+    protected override void Init()
     {
-        cam = Camera.main;
+        m_SpeedNormal = 9f;
         me = gameObject;
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override bool Idle()
     {
-        
-        
-        // if (Input.GetMouseButtonDown(0))
-        // {
-        //     Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-        //     RaycastHit hit;
-        //
-        //     if (Physics.Raycast(ray, out hit))
-        //     {
-        //         agent.SetDestination(hit.point);
-        //     }
-        //     // agent.SetDestination(enemies[0].transform.TransformVector(0, 0, 0));
-        // }
+        return agent.velocity.magnitude > .01;  // todo: check to make sure this actually works
     }
 
-    private void FixedUpdate()
+    protected override void Aim()
     {
-        // agent.velocity = agent.desiredVelocity * m_SpeedNormal * Time.deltaTime;
+        var rotation = Quaternion.LookRotation(enemies[0].gameObject.transform.position);
+        m_FireTransform.rotation = Quaternion.Slerp(m_FireTransform.rotation, rotation, m_SpeedNormal * Time.deltaTime);
     }
 
-
-    public void addEnemyTank(GameObject tank)
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        
+        Debug.Log("Tank Movement AI Child onEnable()");
+        m_Rigidbody.isKinematic = true;
+    }
+    
+    public void AddEnemyTank(GameObject tank)
     {
         enemies.Add(tank);
     }

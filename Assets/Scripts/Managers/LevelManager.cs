@@ -76,7 +76,7 @@ public class LevelManager : MonoBehaviour
             {
                 if (tank2 != tank)
                 {
-                    tank.m_Instance.GetComponent<AIMovement>().addEnemyTank(tank2.m_Instance);
+                    tank.m_Instance.GetComponent<TankMovementAI>().AddEnemyTank(tank2.m_Instance);
                 }
             }
         }

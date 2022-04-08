@@ -1,4 +1,5 @@
 ﻿using System;
+using Tank;
 using UnityEngine;
 
 [Serializable]
@@ -15,7 +16,7 @@ public class TankManager
 
     private TankMovement m_Movement;       
     private TankShooting m_Shooting;
-    private AIMovement m_AIMovement;
+    private TankMovementAI m_TankMovementAI;  // Todo: make this abstract and inheritted
     private GameObject m_CanvasGameObject;
 
 
@@ -25,7 +26,7 @@ public class TankManager
         
         m_Movement = m_Instance.GetComponent<TankMovement>();
         m_Shooting = m_Instance.GetComponent<TankShooting>();
-        m_AIMovement = m_Instance.GetComponent<AIMovement>();
+        m_TankMovementAI = m_Instance.GetComponent<TankMovementAI>();
         m_CanvasGameObject = m_Instance.GetComponentInChildren<Canvas>().gameObject;
 
         m_Movement.m_PlayerNumber = m_PlayerNumber;
@@ -58,7 +59,7 @@ public class TankManager
 
         if (m_AI)
         {
-            m_AIMovement.StartCoroutine(m_AIMovement.SearchCoroutine());
+            m_TankMovementAI.StartCoroutine(m_TankMovementAI.SearchCoroutine());
         }
 
         m_CanvasGameObject.SetActive(true);

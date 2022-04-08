@@ -1,57 +1,41 @@
 ﻿using System;
+using Tank;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.Animations;
 using Random = UnityEngine.Random;
 
-public class TankMovement : MonoBehaviour
+public class TankMovementHuman : TankMovement
 {
-    public int m_PlayerNumber = 1;
-    public Transform m_FireTransform;
-    public Transform m_BodyTransform;
-    public float m_SpeedNormal = 12f;
-    private float m_SpeedSlow = 2f;
-    public float m_TurnSpeed = 180f;
-    public AudioSource m_MovementAudio;
-    public AudioClip m_EngineIdling;
-    public AudioClip m_EngineDriving;
-    public float m_PitchRange = 0.2f;
-
-    private float m_SpeedCurrent;
     private string m_MovementAxisName;
     private string m_LookAxisHorizontalName;
     private string m_LookAxisVerticalName;
     private string m_TurnAxisName;
-    private Rigidbody m_Rigidbody;
     private float m_MovementInputValue;
     private float m_TurnInputValue;
     private Vector3 m_LookVector;
     private Vector3 m_MoveVector;
-    private float m_OriginalPitch;
-    private Vector3 point;
     private Quaternion m_RotateAngle;
-
-
-    private void Awake()
+    
+    protected override void Init()
     {
-        m_Rigidbody = GetComponent<Rigidbody>();
+        m_SpeedNormal = 12f;
     }
 
-
-    private void OnEnable ()
+    protected override bool Idle()
     {
-        m_SpeedCurrent = m_SpeedNormal;
+        return Mathf.Abs(m_MovementInputValue) < 0.1f && Mathf.Abs(m_TurnInputValue) < 0.1f; 
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        
+        Debug.Log("Tank Movement Human Child onEnable()");
         m_Rigidbody.isKinematic = false;
         m_MovementInputValue = 0f;
         m_TurnInputValue = 0f;
     }
-
-
-    private void OnDisable ()
-    {
-        m_Rigidbody.isKinematic = true;
-    }
-
 
     private void Start()
     {
@@ -60,10 +44,15 @@ public class TankMovement : MonoBehaviour
 
         m_LookAxisHorizontalName = "LookHorizontal" + m_PlayerNumber;
         m_LookAxisVerticalName = "LookVertical" + m_PlayerNumber;
-
-        m_OriginalPitch = m_MovementAudio.pitch;
     }
-
+    
+    private void FixedUpdate()
+    {
+        // Move and turn the tank.
+        Move();
+        Turn();
+        Aim();
+    }
 
     private void Update()
     {
@@ -83,42 +72,8 @@ public class TankMovement : MonoBehaviour
         {
             m_RotateAngle = Quaternion.LookRotation(m_MoveVector);
         }
-        
-        EngineAudio();
     }
-
-
-    private void EngineAudio()
-    {
-        // Play the correct audio clip based on whether or not the tank is moving and what audio is currently playing.
-        if (Mathf.Abs(m_MovementInputValue) < 0.1f && Mathf.Abs(m_TurnInputValue) < 0.1f) //idling
-        {
-            if(m_MovementAudio.clip == m_EngineDriving)
-            {
-                m_MovementAudio.clip = m_EngineIdling;
-                m_MovementAudio.pitch = Random.Range(m_OriginalPitch - m_PitchRange, m_OriginalPitch + m_PitchRange);
-                m_MovementAudio.Play();
-            }
-        }
-        else //driving
-        {
-            if (m_MovementAudio.clip == m_EngineIdling)
-            {
-                m_MovementAudio.clip = m_EngineDriving;
-                m_MovementAudio.pitch = Random.Range(m_OriginalPitch - m_PitchRange, m_OriginalPitch + m_PitchRange);
-                m_MovementAudio.Play();
-            }
-        }
-    }
-
-
-    private void FixedUpdate()
-    {
-        // Move and turn the tank.
-        Move();
-        Turn();
-        Aim();
-    }
+    
     private void Move()
     {
         // Adjust the position of the tank based on the player's input.
@@ -140,22 +95,14 @@ public class TankMovement : MonoBehaviour
         //
         //
         
-        
-     
         // Smoothly rotate towards the target point.
         m_BodyTransform.rotation = Quaternion.Slerp(m_BodyTransform.rotation, m_RotateAngle, 8f * Time.deltaTime);
 
         // transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, speed * Time.deltaTime);
     }
-    
-    float AngleBetweenTwoPoints(Vector3 a, Vector3 b)
-    {
-        return Mathf.Atan2( a.x - b.x, a.y - b.y) * Mathf.Rad2Deg;
-    }
-    
-    private void Aim()
-    {
 
+    protected override void Aim()
+    {
         // Vector3 MouseWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, 0, Input.mousePosition.z));
         var rotation = Quaternion.LookRotation(m_LookVector);
         m_FireTransform.rotation = Quaternion.Slerp(m_FireTransform.rotation, rotation, m_SpeedNormal * Time.deltaTime);
@@ -169,14 +116,6 @@ public class TankMovement : MonoBehaviour
         // var target = mousePos - middleOfScreen;
         // var flipped = new Vector3(target.x, 0f, target.y);
         // m_FireTransform.LookAt(flipped);
-        
-        
-        
-        
-        
-        
-        
-        
         
         // Vector3 mouse_pos;
         // Vector3 object_pos;
@@ -243,17 +182,5 @@ public class TankMovement : MonoBehaviour
         // point.Set(point.x, point.y, point.z);
         //
         // m_FireTransform.LookAt(point);
-    }
-
-    public void SetSpeedSlow()
-    {
-        Debug.Log(m_SpeedSlow);
-        m_SpeedCurrent = m_SpeedSlow;
-    }
-
-    public void SetSpeedNormal()
-    {
-        m_SpeedCurrent = m_SpeedNormal;
-        // m_SpeedCurrent = Mathf.Lerp(m_SpeedSlow, m_SpeedNormal, Time.deltaTime * 100f);
     }
 }

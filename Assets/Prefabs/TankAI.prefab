@@ -1122,7 +1122,6 @@ GameObject:
   - component: {fileID: 8148124956141907740}
   - component: {fileID: 8148124956141907741}
   - component: {fileID: 8148124956141907738}
-  - component: {fileID: 229176317}
   - component: {fileID: 533432661}
   - component: {fileID: 9019498084310964528}
   - component: {fileID: 4167039392440344549}
@@ -1376,27 +1375,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &229176317
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8148124957142869683}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29af3199e11b72e47b41ff380db540fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PlayerNumber: 1
-  m_FireTransform: {fileID: 8148124957142514523}
-  m_BodyTransform: {fileID: 8148124957142514527}
-  m_SpeedNormal: 9
-  m_TurnSpeed: 180
-  m_MovementAudio: {fileID: 8148124956141907741}
-  m_EngineIdling: {fileID: 8300000, guid: 4932ab25b84dd7649b80af68a9660ddc, type: 3}
-  m_EngineDriving: {fileID: 8300000, guid: d7ca9fb5aa30155449192b23d7fb3336, type: 3}
-  m_PitchRange: 0.2
 --- !u!114 &533432661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1450,19 +1428,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PlayerNumber: 1
-  m_FireTransform: {fileID: 0}
-  m_BodyTransform: {fileID: 0}
-  m_SpeedNormal: 12
-  m_TurnSpeed: 180
-  m_MovementAudio: {fileID: 0}
-  m_EngineIdling: {fileID: 0}
-  m_EngineDriving: {fileID: 0}
+  m_FireTransform: {fileID: 8148124957142514523}
+  m_BodyTransform: {fileID: 8148124957142514527}
+  m_MovementAudio: {fileID: 8148124956141907741}
+  m_EngineIdling: {fileID: 8300000, guid: 4932ab25b84dd7649b80af68a9660ddc, type: 3}
+  m_EngineDriving: {fileID: 8300000, guid: d7ca9fb5aa30155449192b23d7fb3336, type: 3}
   m_PitchRange: 0.2
   enemies: []
   me: {fileID: 0}
   agent: {fileID: 1363794902024877745}
   state: 0
-  cam: {fileID: 0}
 --- !u!195 &1363794902024877745
 NavMeshAgent:
   m_ObjectHideFlags: 0
