@@ -12,11 +12,13 @@ public class TankMovementAI : TankMovement
     [SerializeField] private GameObject me;
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private int state;
+    private TankShooting TankShooting;
     
     private const int SEARCH = 0;
     private const int ATTACK = 1;
     private const int RELOAD = 2;
 
+    // Todo: maybe these coroutines belong in an AI brain script?
     public IEnumerator SearchCoroutine()
     {
         while (TargetInsight() == false)
@@ -34,6 +36,7 @@ public class TankMovementAI : TankMovement
         while (TargetInsight())
         {
             Debug.Log("Attack Coroutine Step");
+            StartCoroutine(TankShooting.FireCoroutine());
             yield return new WaitForSeconds(1f);
         }
         StartCoroutine(SearchCoroutine());
@@ -82,6 +85,7 @@ public class TankMovementAI : TankMovement
     {
         m_SpeedNormal = 9f;
         me = gameObject;
+        TankShooting = gameObject.GetComponent<TankShooting>();
     }
 
     protected override bool Idle()

@@ -19,7 +19,7 @@ namespace Tank.Human
         protected override void Update()
         {
             base.Update();
-            if (Input.GetAxis(m_FireButton) > 0 && ammo > 0 && m_Fired == false) //have we pressed fire for the first time?
+            if (Input.GetAxis(m_FireButton) > 0) //have we pressed fire for the first time?
             {
                 StartCoroutine((IEnumerator)base.FireCoroutine());
             }

@@ -60,8 +60,13 @@ namespace Tank
         {
         }
 
-        protected IEnumerator FireCoroutine()
+        public IEnumerator FireCoroutine()
         {
+            if (ammo <= 0 || m_Fired == true)  // If we have fired recently or don't have ammo, don't shoot
+            {
+                yield break;
+            }
+            
             m_Fired = true;
             ammo--;
             int ammoCountOnFire = ammo;
