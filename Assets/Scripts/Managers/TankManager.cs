@@ -1,5 +1,6 @@
 ﻿using System;
 using Tank;
+using Tank.Human;
 using UnityEngine;
 
 [Serializable]
@@ -15,7 +16,7 @@ public class TankManager
 
 
     private TankMovement m_Movement;       
-    private TankShooting m_Shooting;
+    private TankShooting m_TankShooting;
     private TankMovementAI m_TankMovementAI;  // Todo: make this abstract and inheritted
     private GameObject m_CanvasGameObject;
 
@@ -25,12 +26,12 @@ public class TankManager
         String name = m_AI ? "COM" : "PLAYER";
         
         m_Movement = m_Instance.GetComponent<TankMovement>();
-        m_Shooting = m_Instance.GetComponent<TankShooting>();
-        m_TankMovementAI = m_Instance.GetComponent<TankMovementAI>();
+        m_TankShooting = m_Instance.GetComponent<TankShooting>();
+        m_TankMovementAI = m_Instance.GetComponent<TankMovementAI>();  // Todo: make this not AI spesific
         m_CanvasGameObject = m_Instance.GetComponentInChildren<Canvas>().gameObject;
 
         m_Movement.m_PlayerNumber = m_PlayerNumber;
-        m_Shooting.m_PlayerNumber = m_PlayerNumber;
+        m_TankShooting.m_PlayerNumber = m_PlayerNumber;
 
         m_ColoredPlayerText = "<color=#" + ColorUtility.ToHtmlStringRGB(m_PlayerColor) + ">" + name +" " + m_PlayerNumber + "</color>";
 
@@ -46,7 +47,7 @@ public class TankManager
     public void DisableControl()
     {
         m_Movement.enabled = false;
-        m_Shooting.enabled = false;
+        m_TankShooting.enabled = false;
 
         m_CanvasGameObject.SetActive(false);
     }
@@ -55,7 +56,7 @@ public class TankManager
     public void EnableControl()
     {
         m_Movement.enabled = true;
-        m_Shooting.enabled = true;
+        m_TankShooting.enabled = true;
 
         if (m_AI)
         {
@@ -70,7 +71,7 @@ public class TankManager
     {
         m_Instance.transform.position = m_SpawnPoint.position;
         m_Instance.transform.rotation = m_SpawnPoint.rotation;
-        m_Shooting.DrawRay(); //Draw prediction line at the beginning or rounds (after resetting the position)
+        m_TankShooting.DrawRay(); //Draw prediction line at the beginning or rounds (after resetting the position)
 
         m_Instance.SetActive(false);
         m_Instance.SetActive(true);
