@@ -11,7 +11,8 @@ public class LevelManager : MonoBehaviour
     public float m_EndDelay = 3f;           
     public CameraControl m_CameraControl;   
     public Text m_MessageText;              
-    public GameObject m_TankPrefab;         
+    public GameObject m_TankPrefab;
+    public GameObject m_TankAIPrefab;             
     public TankManager[] m_Tanks;           
 
 
@@ -42,6 +43,7 @@ public class LevelManager : MonoBehaviour
         m_EndWait = new WaitForSeconds(m_EndDelay);
 
         SpawnAllTanks();
+        SetupAllAITanks();
         SetCameraTargets();
 
         StartCoroutine(GameLoop());
@@ -52,10 +54,31 @@ public class LevelManager : MonoBehaviour
     {
         for (int i = 0; i < m_Tanks.Length; i++)
         {
+            GameObject tankPrefab = m_Tanks[i].m_AI ? m_TankAIPrefab : m_TankPrefab;
+            
             m_Tanks[i].m_Instance =
-                Instantiate(m_TankPrefab, m_Tanks[i].m_SpawnPoint.position, m_Tanks[i].m_SpawnPoint.rotation) as GameObject;
+                Instantiate(tankPrefab, m_Tanks[i].m_SpawnPoint.position, m_Tanks[i].m_SpawnPoint.rotation) as GameObject;
             m_Tanks[i].m_PlayerNumber = i + 1;
             m_Tanks[i].Setup();
+        }
+    }
+
+    private void SetupAllAITanks()
+    {
+        foreach (var tank in m_Tanks)
+        {
+            if (tank.m_AI == false)
+            {
+                continue;
+            }
+
+            foreach (var tank2 in m_Tanks)  // Todo: fix this name
+            {
+                if (tank2 != tank)
+                {
+                    tank.m_Instance.GetComponent<AIMovement>().addEnemyTank(tank2.m_Instance);
+                }
+            }
         }
     }
 
