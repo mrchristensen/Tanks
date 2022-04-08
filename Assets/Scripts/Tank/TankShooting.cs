@@ -15,7 +15,7 @@ namespace Tank
         public AudioClip m_ChargingClip;
         public AudioClip m_FireClip;
         public float m_ShellLaunchForce = 15f;
-        public int m_PlayerNumber = 1;
+        public int m_PlayerNumber;  // Todo: make this come from somewhere that makes sense (I don't even know where this is currently coming from
         private TankMovement m_TankMovement;
         private float m_ChargeSpeed;
         protected bool m_Fired;

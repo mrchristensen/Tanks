@@ -91,7 +91,11 @@ public class TankMovementAI : TankMovement
 
     protected override void Aim()
     {
-        var rotation = Quaternion.LookRotation(enemies[0].gameObject.transform.position);
+        Vector3 enemyPosition = enemies[0].gameObject.transform.position;
+        enemyPosition -= transform.position;
+        enemyPosition.y = 0;
+        
+        var rotation = Quaternion.LookRotation(enemyPosition);
         m_FireTransform.rotation = Quaternion.Slerp(m_FireTransform.rotation, rotation, m_SpeedNormal * Time.deltaTime);
     }
 
@@ -102,7 +106,12 @@ public class TankMovementAI : TankMovement
         Debug.Log("Tank Movement AI Child onEnable()");
         m_Rigidbody.isKinematic = true;
     }
-    
+
+    private void FixedUpdate()
+    {
+        Aim();
+    }
+
     public void AddEnemyTank(GameObject tank)
     {
         enemies.Add(tank);

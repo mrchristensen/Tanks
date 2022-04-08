@@ -8,12 +8,12 @@ public class TankManager
 {
     public Color m_PlayerColor;            
     public Transform m_SpawnPoint; 
-    public Boolean m_AI = false;         
+    
+    public Boolean m_AI = false;
     [HideInInspector] public int m_PlayerNumber;             
     [HideInInspector] public string m_ColoredPlayerText;
     [HideInInspector] public GameObject m_Instance;          
-    [HideInInspector] public int m_Wins;                     
-
+    [HideInInspector] public int m_Wins;
 
     private TankMovement m_Movement;       
     private TankShooting m_TankShooting;
@@ -24,7 +24,7 @@ public class TankManager
     public void Setup()
     {
         String name = m_AI ? "COM" : "PLAYER";
-        
+
         m_Movement = m_Instance.GetComponent<TankMovement>();
         m_TankShooting = m_Instance.GetComponent<TankShooting>();
         m_TankMovementAI = m_Instance.GetComponent<TankMovementAI>();  // Todo: make this not AI spesific
