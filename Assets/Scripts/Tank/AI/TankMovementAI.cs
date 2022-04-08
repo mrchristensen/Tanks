@@ -25,20 +25,28 @@ public class TankMovementAI : TankMovement
         {
             Debug.Log("Search Coroutine Step");
             agent.SetDestination(enemies[0].transform.position); //Update the position of the enemy
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(.5f);
         }
-        
         StartCoroutine(AttackCoroutine());
+    }
+
+    private IEnumerator StopMoving()
+    {
+        yield return new WaitForSeconds(1f);
+        agent.destination = gameObject.transform.position;
     }
 
     IEnumerator AttackCoroutine()
     {
+        StartCoroutine(StopMoving());  // TODO: Change this to stop moving when the player is within range.  Better yet, never stop moving unless the play isn't visible, or out of range
+        
         while (TargetInsight())
         {
             Debug.Log("Attack Coroutine Step");
             StartCoroutine(TankShooting.FireCoroutine());
             yield return new WaitForSeconds(1f);
         }
+
         StartCoroutine(SearchCoroutine());
          
         // else if (no bullets)
@@ -47,6 +55,8 @@ public class TankMovementAI : TankMovement
         //     yield break;
         // }
     }
+
+
     
     // IEnumerator ReloadCoroutine()
     // {
