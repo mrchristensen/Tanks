@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.AccessControl;
 using Tank;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class TankMovementAI : TankMovement
 {
@@ -12,6 +14,8 @@ public class TankMovementAI : TankMovement
     [SerializeField] private GameObject me;
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private int state;
+    [SerializeField] private GameObject[] hidingPlaces;
+    
     private TankShooting TankShooting;
     
     private const int SEARCH = 0;
@@ -35,20 +39,81 @@ public class TankMovementAI : TankMovement
         yield return new WaitForSeconds(1f);
         agent.destination = gameObject.transform.position;
     }
+    
+    IEnumerator FleeCoroutine()
+    {
+        Debug.Log("Starting Flee Coroutine");
+        agent.destination = gameObject.transform.position;  // Stop the agent (so if we are already hidden we don't move
+
+        //Exit condition is ammo, in which case we start the search algorithm again
+        while (TankShooting.HasAmmo() == false)
+        {
+            if (TargetInsight())
+            {
+                float closestHidingPlaceDistance = float.MaxValue;
+                Vector3 closestHidingPlace =
+                    hidingPlaces[Random.Range(0, hidingPlaces.Length)].transform
+                        .position; // Initialize this to something just in case we don't find a hiding place
+
+                //Check all the locations for hiding and see if they break the sight line with the player
+                foreach (GameObject hidingPlace in hidingPlaces)
+                {
+                    if (sightLine(enemies[0].transform, hidingPlace.transform)) continue;
+
+                    if (Vector3.Distance(me.transform.position, hidingPlace.transform.position) <
+                        closestHidingPlaceDistance)
+                    {
+                        closestHidingPlaceDistance =
+                            Vector3.Distance(me.transform.position, hidingPlace.transform.position);
+                        closestHidingPlace =
+                            hidingPlace.transform.position; // TODO: introduce local car here for position
+                    }
+                }
+
+                //Pick the closest one as the nav target
+                agent.SetDestination(closestHidingPlace);
+
+            }
+
+            yield return new WaitForSeconds(1f);
+        }
+        StartCoroutine(SearchCoroutine());
+    }
+
+    private bool sightLine(Transform transform1, Transform transform2)
+    {
+        Vector3 rayDirection = transform1.position - transform2.position;
+        if (Physics.Raycast (transform2.position, rayDirection, out RaycastHit hit)) {
+            if (hit.transform == transform1)
+            {
+                return true;
+            }
+            
+        }
+        return false;
+    }
 
     IEnumerator AttackCoroutine()
     {
-        StartCoroutine(StopMoving());  // TODO: Change this to stop moving when the player is within range.  Better yet, never stop moving unless the play isn't visible, or out of range
-        
+        StartCoroutine(
+            StopMoving()); // TODO: Change this to stop moving when the player is within range.  Better yet, never stop moving unless the play isn't visible, or out of range
+
         while (TargetInsight())
         {
             Debug.Log("Attack Coroutine Step");
+
+            if (TankShooting.HasAmmo() == false)
+            {
+                StartCoroutine(FleeCoroutine());
+                yield break;
+            }
+
             StartCoroutine(TankShooting.FireCoroutine());
             yield return new WaitForSeconds(1f);
         }
 
         StartCoroutine(SearchCoroutine());
-         
+
         // else if (no bullets)
         // {
         //     StartCoroutine(ReloadCoroutine());
@@ -57,7 +122,7 @@ public class TankMovementAI : TankMovement
     }
 
 
-    
+
     // IEnumerator ReloadCoroutine()
     // {
     //     Debug.Log("Reload Coroutine Step");
@@ -71,7 +136,7 @@ public class TankMovementAI : TankMovement
 
     private bool TargetInsight()
     {
-        Vector3 fromPosition = me.transform.position;
+        Vector3 fromPosition = me.transform.position;  //TODO: refactor this with sightLine()
         Vector3 toPosition = enemies[0].transform.position;
         Vector3 direction = toPosition - fromPosition;
         
@@ -96,6 +161,8 @@ public class TankMovementAI : TankMovement
         m_SpeedNormal = 9f;
         me = gameObject;
         TankShooting = gameObject.GetComponent<TankShooting>();
+        hidingPlaces = GameObject.FindGameObjectsWithTag(Tags.HIDING_PLACE);  //Todo: Is this expensive?
+        Debug.Log("Number of hiding places" + hidingPlaces.Length);
     }
 
     protected override bool Idle()

@@ -98,6 +98,11 @@ namespace Tank
             }
         }
 
+        public bool HasAmmo()
+        {
+            return ammo > 0;
+        }
+
         private void SetAmmoUI()
         {
             m_AmmoSlider.value = ammo;
