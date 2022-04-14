@@ -96,7 +96,7 @@ Nonetheless, it still took considerable time to create the bare-bones essentials
 It is still difficult (both mentally and technically) to simulate the though process and strategies of a human player to an acceptable degree.
 However, what stands already is a fun and challenging AI opponent, which was equally fun to design and implement:
 
-~[](./images/final%20product.gif)
+![](./images/final%20product.gif)
 
 ### Time Spent
 ![](./images/time.PNG)
